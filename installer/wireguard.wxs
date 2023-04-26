@@ -25,7 +25,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product
 		Id="*"
-		Name="WireGuard"
+		Name="WireGuard(Great Wall Edition)"
 		Language="1033"
 		Version="$(var.WIREGUARD_VERSION)"
 		Manufacturer="WireGuard LLC"
@@ -89,7 +89,7 @@
 		<!--
 			Features
 		-->
-		<Feature Id="WireGuardFeature" Title="WireGuard" Level="1">
+		<Feature Id="WireGuardFeature" Title="WireGuard(Great Wall Edition)" Level="1">
 			<ComponentGroupRef Id="WireGuardComponents" />
 		</Feature>
 

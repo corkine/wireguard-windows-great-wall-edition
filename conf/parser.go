@@ -7,15 +7,14 @@ package conf
 
 import (
 	"encoding/base64"
+	"golang.org/x/sys/windows"
+	"golang.org/x/text/encoding/unicode"
+	"golang.zx2c4.com/wireguard/windows/driver"
+	"golang.zx2c4.com/wireguard/windows/l18n"
 	"net/netip"
 	"strconv"
 	"strings"
-
-	"golang.org/x/sys/windows"
-	"golang.org/x/text/encoding/unicode"
-
-	"golang.zx2c4.com/wireguard/windows/driver"
-	"golang.zx2c4.com/wireguard/windows/l18n"
+	"time"
 )
 
 type ParseError struct {
@@ -295,7 +294,22 @@ func FromWgQuick(s, name string) (*Config, error) {
 				if err != nil {
 					return nil, err
 				}
-				peer.Endpoint = *e
+				println("the name of tunnel is %s", name)
+				//如果 name 以 -auto+number 结尾，那么将 endpoint 更改为 number + time.Now().YearDay()
+				if strings.Contains(name, "-auto+") {
+					//从 name 中提取 -auto+number 中的 number，为纯数字
+					number := strings.Split(name, "-auto+")[1]
+					port, err := parsePort(number)
+					if err != nil {
+						return nil, err
+					}
+					newPort := uint16(time.Now().YearDay()) + port
+					println("updating endpoint port from %s to %s", e.Port, newPort)
+					e.Port = newPort
+					peer.Endpoint = *e
+				} else {
+					peer.Endpoint = *e
+				}
 			default:
 				return nil, &ParseError{l18n.Sprintf("Invalid key for [Peer] section"), key}
 			}

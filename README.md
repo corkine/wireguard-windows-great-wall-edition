@@ -1,4 +1,8 @@
-# [WireGuard](https://www.wireguard.com/) for Windows
+# [WireGuard](https://www.wireguard.com/) for Windows (Great Wall Edition)
+
+Wireguard Great Wall Edition 基于 WireGuard for Windows main 分支源码修改，主要增加了 `根据配置文件名称中的 -auto+{BASE_PORT}` 来自动将端口更改为今天是今年的第几天 + 此基础 Port 作为实际下发给 Wireguard 的端口，以避免此端口被长时或短时封锁导致的连通性问题。比如 `hk-tunnel-auto+10086` 会直接使用端口 `10086+{今天是今年的第几天}` 而非 10086。
+
+使用指南：直接执行 `quickinstall.bat` 即可，会自动卸载旧版本的 Wireguard 并安装新版本。 或在这里直接下载预先编译好的二进制安装包：[天翼云盘](https://cloud.189.cn/t/UFnYruuQbUJj)。
 
 This is a fully-featured WireGuard client for Windows that uses [WireGuardNT](https://git.zx2c4.com/wireguard-nt/about/). It is the only official and recommended way of using WireGuard on Windows.
 
